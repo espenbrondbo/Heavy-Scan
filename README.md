@@ -1,7 +1,7 @@
 # Heavy-Scan
 Tool for various types of port scanning written in python.
 
-##Usage
+# #Usage
 Start your script with
 ```
 from heavy import *
