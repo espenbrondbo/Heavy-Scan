@@ -1,13 +1,12 @@
-import thread, time
+import time
+import thread
 
 NOTHING = 0
 BUSY = 1
 
-	
 
 class ThreadPool:
-	
-	def __init__(self, cap, jobstats = 2000):
+	def __init__(self, cap, jobstats=2000):
 		self.cap = cap
 		self.arr = []
 		self.jobnum = 0

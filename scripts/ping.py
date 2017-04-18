@@ -16,9 +16,9 @@ def ping(ip, bytes=0, tries=2):
 		
 		ms = getms()
 
-		resp = sr1(packet, verbose = 0, timeout = TIMEOUT)
+		resp = sr1(packet, verbose=0, timeout=TIMEOUT)
 
-		if (resp != None):
+		if resp != None:
 			times.append(getms() - ms)
 	
 	answer = False
@@ -27,7 +27,7 @@ def ping(ip, bytes=0, tries=2):
 			answer = True
 	if not answer:
 		p = "-no response from " + ip
-#		print p
+		#print p
 		return
 		
 	maxim, minim, avg = 0, 100000000, 0

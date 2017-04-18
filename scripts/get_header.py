@@ -2,10 +2,11 @@ from scapy.all import *
 from heavy import *
 import socket
 
+
 def get_header(ip, port):
 	global TIMEOUT
 	
-#	print " get header", ip, port
+	#print " get header", ip, port
 	try:
 		s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		s.settimeout(TIMEOUT)
@@ -18,6 +19,7 @@ def get_header(ip, port):
 		if port is 80: #HTTP server, need to cut out the html
 			lines = data.split("\n")
 			header = "\t"
+	
 			for line in lines:
 				if "<html" in line or "<HTML" in line:
 					break # we don't want the code for the site, only headers
@@ -26,7 +28,8 @@ def get_header(ip, port):
 				if "Server:" in line:
 					server = line.replace("Server:", "")
 			print ("+header from " + ip + ":" + str(port) + " \n" + header[:-2])
-		else: #not HTTP server
+		else:
+			#not HTTP server
 			if data:
 				data = data.replace("\n", "")
 				print ("+header from " + ip + ":" + str(port) + " \t" + data)
@@ -35,19 +38,19 @@ def get_header(ip, port):
 		
 	except:
 		pass
-#		print ("-error getting header from " + ip + ":" + str(port))
+	#print ("-error getting header from " + ip + ":" + str(port))
 	return False
 
 	nttl = random.randint(99, 144)
 	ipp = IP(dst=ip, ttl=nttl)
 	seqnr = random.randint(1034245, 3034245)
-	tpac = TCP(dport=port, flags="S", seq = seqnr)
-	synack = sr1(ipp/tpac, timeout=TIMEOUT, verbose = 0)
+	tpac = TCP(dport=port, flags="S", seq=seqnr)
+	synack = sr1(ipp/tpac, timeout=TIMEOUT, verbose=0)
 	
-	if synack != None and synack.getlayer(TCP):
+	if synack is not None and synack.getlayer(TCP):
 		tcp = synack.getlayer(TCP)
-#		print "flags " + str(tcp.flags)
-#		print synack
+		#print "flags " + str(tcp.flags)
+		#print synack
 		if tcp.flags != 18:
 			return False
 		print ("##seq" + str(synack.seq))
@@ -64,4 +67,3 @@ def get_header(ip, port):
 		print " wtf at:" + ip + ":" + str(port)
 		synack.show()
 	return False
-	

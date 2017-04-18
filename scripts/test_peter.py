@@ -1,4 +1,3 @@
-import thread
 from heavy import *
 
 ips = [ip_test]
@@ -10,12 +9,12 @@ for port in range(1, 10):
 
 for port in ports:
 	for ip in ips:
-		for send in senders:
+		for sender in senders:
 			thread.start_new_thread(null_scan, (ip, 22,))
-#			if syn_scan(ip, port, sender=send):
-#				pass
-#			else:
-#				print " nothing on\t", ip, "\t", port, "\tfrom", send
+			if syn_scan(ip, port, sender=sender):
+				print " hit on \t", ip, "\t", port, "\tfrom", sender
+			else:
+				print " nothing on\t", ip, "\t", port, "\tfrom", sender
 
 print "+done sending"
 time.sleep(4)
